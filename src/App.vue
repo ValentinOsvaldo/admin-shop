@@ -29,8 +29,6 @@ const unsubscribe = authStore.$subscribe(
       router.replace({ name: 'home' });
       return;
     }
-
-    console.log(state.status);
   },
   {
     immediate: true,
