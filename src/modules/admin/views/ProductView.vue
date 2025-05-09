@@ -65,15 +65,25 @@
       <label for="stock" class="form-label">Imágenes</label>
       <!-- Row with scrollable horizontal -->
       <div class="flex p-2 overflow-x-auto space-x-8 w-full h-[265px] bg-gray-200 rounded">
-        <div class="flex-shrink-0" v-for="image in images" :key="image.key">
-          <img :src="image.value" :alt="title" class="w-[250px] h-[250px] rounded object-contain" />
+        <div class="flex-shrink-0" v-for="image in images" :key="image.value">
+          <img :src="image.value" class="w-[250px] h-[250px] rounded object-contain" />
+        </div>
+        <div class="flex-shrink-0" v-for="image in imageFiles" :key="image.name">
+          <img :src="temporalImageUrl(image)" class="w-[250px] h-[250px] rounded object-contain" />
         </div>
       </div>
       <!-- Upload image -->
       <div class="col-span-2 my-2">
         <label for="image" class="form-label">Subir imagen</label>
 
-        <input multiple type="file" id="image" class="form-control" />
+        <input
+          multiple
+          type="file"
+          id="image"
+          class="form-control"
+          accept="image/*"
+          @change="onFileChanged"
+        />
       </div>
 
       <div class="mb-4">
@@ -101,19 +111,14 @@
       <div class="my-4 text-right">
         <button
           type="submit"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
+          :disabled="productMutation.isPending.value"
         >
           Guardar
         </button>
       </div>
     </div>
   </form>
-
-  <div class="grid grid-cols-2 mt-2">
-    <pre class="bg-blue-200 p-2 overflow-hidden">{{ values }}</pre>
-    <pre class="bg-red-200 p-2 overflow-hidden">{{ errors }}</pre>
-    <pre class="bg-green-200 p-2 overflow-hidden">{{ meta }}</pre>
-  </div>
 </template>
 
 <script lang="ts" src="./ProductView.ts"></script>
